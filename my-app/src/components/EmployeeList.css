@@ -1,0 +1,40 @@
+.employee-list {
+  padding: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.employee-list h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.employee-list table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.employee-list th,
+.employee-list td {
+  padding: 12px 15px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.employee-list th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+  color: #495057;
+}
+
+.employee-list tr:hover {
+  background-color: #f8f9fa;
+}
+
+.employee-list tr:last-child td {
+  border-bottom: none;
+} 

@@ -1,0 +1,142 @@
+.announcements-section {
+  background-color: white;
+  border-radius: 20px;
+  padding: 20px;
+  box-shadow: 0 0 20px rgba(44, 39, 56, 0.04);
+  margin-bottom: 30px;
+}
+
+.announcements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.announcement-card {
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  padding: 15px;
+  border-left: 4px solid transparent;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.announcement-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.announcement-card.priority-urgent {
+  border-left-color: #FF5252;
+}
+
+.announcement-card.priority-high {
+  border-left-color: #FFB547;
+}
+
+.announcement-card.priority-normal {
+  border-left-color: #4318FF;
+}
+
+.announcement-card.priority-low {
+  border-left-color: #05CD99;
+}
+
+.announcement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.announcement-header h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2B3674;
+  margin: 0;
+}
+
+.priority-badge {
+  font-size: 0.7rem;
+  padding: 3px 8px;
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.priority-badge.priority-urgent {
+  background-color: rgba(255, 82, 82, 0.1);
+  color: #FF5252;
+}
+
+.priority-badge.priority-high {
+  background-color: rgba(255, 181, 71, 0.1);
+  color: #FFB547;
+}
+
+.priority-badge.priority-normal {
+  background-color: rgba(67, 24, 255, 0.1);
+  color: #4318FF;
+}
+
+.priority-badge.priority-low {
+  background-color: rgba(5, 205, 153, 0.1);
+  color: #05CD99;
+}
+
+.announcement-date {
+  font-size: 0.75rem;
+  color: #707EAE;
+  margin-bottom: 10px;
+}
+
+.announcement-content {
+  font-size: 0.875rem;
+  color: #2B3674;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.announcement-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.btn-read-more {
+  background: none;
+  border: none;
+  color: #4318FF;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.btn-read-more:hover {
+  text-decoration: underline;
+}
+
+.no-announcements {
+  text-align: center;
+  padding: 20px;
+  color: #707EAE;
+  font-style: italic;
+}
+
+.announcements-error {
+  color: #FF5252;
+  padding: 10px;
+  text-align: center;
+  background-color: rgba(255, 82, 82, 0.1);
+  border-radius: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .announcement-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .priority-badge {
+    margin-top: 5px;
+  }
+}
