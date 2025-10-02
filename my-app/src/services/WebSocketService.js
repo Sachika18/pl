@@ -15,7 +15,7 @@ class WebSocketService {
       console.log('Attempting to connect to WebSocket server...');
       
       this.stompClient = new Client({
-        webSocketFactory: () => new SockJS(process.env.REACT_APP_WS_BASE_URL || 'https://your-backend-app-name.fly.dev/ws'),
+        webSocketFactory: () => new SockJS(process.env.REACT_APP_WS_BASE_URL || 'https://pl-9yyx.onrender.com/ws'),
         debug: function (str) {
           // Disable debug logs
           // console.log(str);
