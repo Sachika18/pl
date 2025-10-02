@@ -25,7 +25,7 @@ const LoginPage = () => {
     e.preventDefault();
     setError('');
     
-    const API_URL = 'http://localhost:8080/api/auth/login';
+    const API_URL = 'https://pl-9yyx.onrender.com/api/auth/login';
     
     try {
       console.log('Attempting to login with:', formData);

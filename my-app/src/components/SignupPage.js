@@ -20,7 +20,7 @@ const SignupPage = () => {
     const [emailError, setEmailError] = useState('');
 
     // API URL - you can easily change this if needed
-    const API_URL = 'http://localhost:8080/api/auth/signup';
+    const API_URL = 'https://pl-9yyx.onrender.com/api/auth/signup';
 
     // Password validation function
     const validatePassword = (password) => {
