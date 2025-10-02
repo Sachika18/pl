@@ -1,3 +1,4 @@
-// API Configuration
-export const API_BASE_URL = 'https://pl-9yyx.onrender.com/api';
-export const WS_BASE_URL = 'wss://pl-9yyx.onrender.com/ws';
+import API_BASE_URL from '../config';
+
+export const API_URL = API_BASE_URL;
+export const WS_URL = API_BASE_URL.replace(/^http/, 'ws').replace(/\/api$/, '/ws');
