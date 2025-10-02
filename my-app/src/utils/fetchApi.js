@@ -1,6 +1,6 @@
 // A fetch-based API utility to replace axios
 
-const API_BASE_URL = 'http://localhost:8080/api';
+const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://your-backend-app-name.fly.dev/api';
 
 // Helper function to get the base URL
 const getBaseUrl = () => {

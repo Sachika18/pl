@@ -1,13 +1,25 @@
-# Use Maven to build the app
-FROM maven:3.8.5-openjdk-17 AS build
-WORKDIR /app
-COPY . .
-RUN mvn clean package -DskipTests
+# Use OpenJDK 17 as base image
+FROM openjdk:17-jdk-slim
 
-# Run the app with OpenJDK
-FROM openjdk:17
+# Set working directory
 WORKDIR /app
-COPY --from=build /app/target/*.jar app.jar
+
+# Copy Maven wrapper and pom.xml
+COPY mvnw .
+COPY .mvn .mvn
+COPY pom.xml .
+
+# Download dependencies (this layer will be cached if pom.xml doesn't change)
+RUN ./mvnw dependency:go-offline -B
+
+# Copy source code
+COPY src ./src
+
+# Build the application
+RUN ./mvnw clean package -DskipTests
+
+# Expose port 8080
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-Dcom.sun.net.ssl.checkRevocation=false", "-jar", "app.jar"]
+# Run the application
+CMD ["java", "-jar", "target/Backend-0.0.1-SNAPSHOT.jar"]
