@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import './Profile.css';
 import defaultAvatar from '../assets/avatar.png';
 import Navbar from './Navbar';
+import { API_URL } from '../utils/constants';
 
 // No longer needed as the backend now provides a formatted employee ID
 
@@ -52,7 +53,7 @@ const Profile = () => {
         }
 
         // Updated endpoint to match the backend
-        const response = await fetch('http://localhost:8080/api/user/profile', {
+        const response = await fetch(`${API_URL}/user/profile`, {
           headers: {
             'Authorization': `Bearer ${token}`,
           }
@@ -184,7 +185,7 @@ const Profile = () => {
           // Then update the avatar
           try {
             console.log("Uploading profile picture...");
-            const avatarResponse = await fetch('http://localhost:8080/api/user/profile/avatar', {
+            const avatarResponse = await fetch(`${API_URL}/user/profile/avatar`, {
               method: 'POST',
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -223,7 +224,7 @@ const Profile = () => {
   // Helper function to update profile data
   const updateProfileData = async (token, profileData) => {
     console.log("Updating profile data:", profileData);
-    const response = await fetch('http://localhost:8080/api/user/profile', {
+    const response = await fetch(`${API_URL}/user/profile`, {
       method: 'PUT',
       headers: {
         'Authorization': `Bearer ${token}`,

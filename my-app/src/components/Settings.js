@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './Settings.css';
 import { useTheme } from '../context/ThemeContext';
+import { API_URL } from '../utils/constants';
 
 const Settings = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const Settings = () => {
 
         try {
           // Fetch user data
-          const response = await fetch('http://localhost:8080/api/dashboard', {
+          const response = await fetch(`${API_URL}/dashboard`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,

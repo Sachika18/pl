@@ -7,6 +7,7 @@ import AnnouncementForm from './AnnouncementForm';
 import TaskService from './services/TaskService';
 import EmployeeService from './services/EmployeeService';
 import DocumentService from './services/DocumentService';
+import { API_URL } from '../utils/constants';
 
 const AdminDash = () => {
   const navigate = useNavigate();
@@ -92,7 +93,7 @@ const AdminDash = () => {
       }
       
       // Fetch announcements from API
-      const response = await fetch('http://localhost:8080/api/announcements', {
+      const response = await fetch(`${API_URL}/api/announcements`, {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
@@ -289,7 +290,7 @@ const AdminDash = () => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const response = await fetch('http://localhost:8080/api/attendance/stats', {
+        const response = await fetch(`${API_URL}/api/attendance/stats`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`,
@@ -476,7 +477,7 @@ const AdminDash = () => {
         try {
           const token = localStorage.getItem('token');
           if (token) {
-            const response = await fetch('http://localhost:8080/api/attendance/department-stats', {
+            const response = await fetch(`${API_URL}/api/attendance/department-stats`, {
               method: 'GET',
               headers: {
                 'Authorization': `Bearer ${token}`,
@@ -573,7 +574,7 @@ const AdminDash = () => {
         // Fetch document activities
         await fetchDocumentActivities();
 
-        const response = await fetch('http://localhost:8080/api/dashboard', {
+        const response = await fetch(`${API_URL}/api/dashboard`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
