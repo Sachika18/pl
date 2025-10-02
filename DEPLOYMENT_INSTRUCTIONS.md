@@ -1,113 +1,65 @@
-# Deployment Instructions for Fly.io
+# Deployment Instructions for Render
 
 ## Prerequisites
-- You have a Fly.io account.
-- You have installed the Fly CLI (`flyctl`). If not, install it using:
-  ```
-  powershell -Command "Invoke-WebRequest -Uri 'https://fly.io/install.ps1' -OutFile 'install.ps1'; .\\install.ps1"
-  ```
-- Choose app names for backend and frontend (e.g., `hr-backend` and `hr-frontend`).
-- Update the placeholder URLs in the code files with your actual app names.
+- You have a Render account (sign up at https://render.com).
+- Your project is pushed to a GitHub repository (e.g., https://github.com/Sachika18/Worklineapp.git).
+- Choose service names for backend and frontend (e.g., `hr-backend` and `hr-frontend`).
+- Update the placeholder URLs in the code files with your actual service names after deployment.
 
-## Update Code with App Names
+## Update Code with Service Names
 
-Before deploying, replace `your-backend-app-name` and `your-frontend-app-name` in the following files with your chosen app names:
+After deploying the backend, update the following files with the actual Render backend URL (e.g., `https://hr-backend.onrender.com`):
 
-1. `my-app/src/utils/api.js`: Update `baseURL`
-2. `my-app/src/utils/fetchApi.js`: Update `API_BASE_URL`
-3. `my-app/src/services/WebSocketService.js`: Update `webSocketFactory`
-4. `Backend/src/main/resources/application.properties`: Update `spring.web.cors.allowed-origins`
-5. `Backend/fly.toml`: Update `app` name
-6. `my-app/fly.toml`: Update `app` name
+1. `my-app/src/utils/api.js`: Update `baseURL` to `https://your-backend-service-name.onrender.com/api`
+2. `my-app/src/utils/fetchApi.js`: Update `API_BASE_URL` to `https://your-backend-service-name.onrender.com/api`
+3. `my-app/src/services/WebSocketService.js`: Update `webSocketFactory` to `new SockJS('https://your-backend-service-name.onrender.com/ws')`
+4. `Backend/src/main/resources/application.properties`: Update `spring.web.cors.allowed-origins` to include `https://your-frontend-service-name.onrender.com`
 
-For example, if your backend app is `hr-backend` and frontend is `hr-frontend`:
-- Change `https://your-backend-app-name.fly.dev/api` to `https://hr-backend.fly.dev/api`
-- Change `https://your-frontend-app-name.fly.dev` to `https://hr-frontend.fly.dev`
+Commit and push these changes to GitHub before redeploying the frontend.
 
-## Backend Deployment
+## Backend Deployment (Web Service)
 
-1. Navigate to the Backend directory:
-   ```
-   cd Backend
-   ```
+1. Go to the Render Dashboard (https://dashboard.render.com).
+2. Click "New" and select "Web Service".
+3. Connect your GitHub repository (authorize Render if needed).
+4. Select the repository and branch (e.g., master).
+5. Configure the service:
+   - **Name**: Choose a name (e.g., `hr-backend`).
+   - **Environment**: Docker.
+   - **Dockerfile Path**: `Backend/Dockerfile` (relative to repo root).
+   - **Branch**: master (or your main branch).
+6. Set environment variables:
+   - `SPRING_DATA_MONGODB_URI`: Your MongoDB connection string.
+   - `JWT_SECRET`: Your JWT secret key.
+   - `PORT`: 8080 (Render sets this automatically, but ensure it's 8080).
+7. Click "Create Web Service".
+8. The backend will build and deploy. It will be available at `https://your-service-name.onrender.com`.
 
-2. Build the Docker image locally (optional):
-   ```
-   docker build -t backend-app .
-   ```
+## Frontend Deployment (Static Site)
 
-3. Login to Fly.io:
-   ```
-   flyctl auth login
-   ```
-
-4. Create a new Fly app for backend (replace `your-backend-app-name` with your desired app name):
-   ```
-   flyctl apps create your-backend-app-name
-   ```
-
-5. Set environment variables for MongoDB URI and JWT secret:
-   ```
-   flyctl secrets set SPRING_DATA_MONGODB_URI="your-mongodb-uri"
-   flyctl secrets set JWT_SECRET="your-jwt-secret"
-   ```
-
-6. Deploy the backend app:
-   ```
-   flyctl deploy
-   ```
-
-7. The backend will be available at `https://your-backend-app-name.fly.dev`
-
-## Frontend Deployment
-
-1. Navigate to the frontend directory:
-   ```
-   cd my-app
-   ```
-
-2. Build the React app:
-   ```
-   npm install
-   npm run build
-   ```
-
-3. Build the Docker image locally (optional):
-   ```
-   docker build -t frontend-app .
-   ```
-
-4. Create a new Fly app for frontend (replace `your-frontend-app-name` with your desired app name):
-   ```
-   flyctl apps create your-frontend-app-name
-   ```
-
-5. Deploy the frontend app:
-   ```
-   flyctl deploy
-   ```
-
-6. The frontend will be available at `https://your-frontend-app-name.fly.dev`
+1. In the Render Dashboard, click "New" and select "Static Site".
+2. Connect your GitHub repository (if not already connected).
+3. Select the repository and branch.
+4. Configure the static site:
+   - **Name**: Choose a name (e.g., `hr-frontend`).
+   - **Branch**: master (or your main branch).
+   - **Build Command**: `npm run build`
+   - **Publish Directory**: `my-app/build`
+   - **Root Directory**: `my-app` (if the package.json is in my-app, otherwise leave blank if in root).
+5. Click "Create Static Site".
+6. The frontend will build and deploy. It will be available at `https://your-service-name.onrender.com`.
 
 ## Notes
 
-- Update your frontend API base URLs and WebSocket URLs to point to the backend Fly app URL.
-- You may want to configure custom domains and HTTPS certificates via Fly.io dashboard.
-- For persistent storage (e.g., file uploads), configure Fly volumes and mount them in the backend container.
-- Monitor logs and scale your apps using Fly.io commands.
+- Render provides free tiers for both web services and static sites.
+- Update your frontend code with the backend URL after backend deployment, then redeploy the frontend.
+- For persistent storage (e.g., file uploads), Render doesn't support persistent volumes on free tier; consider using cloud storage like AWS S3.
+- Monitor logs and manage services via the Render dashboard.
+- WebSocket connections should work with Render's web services.
 
-## Useful Fly.io Commands
+## Useful Render Features
 
-- View logs:
-  ```
-  flyctl logs -a your-app-name
-  ```
-
-- Scale instances:
-  ```
-  flyctl scale count 2 -a your-app-name
-  ```
-
-- SSH into a running instance:
-  ```
-  flyctl ssh console -a your-app-name
+- View logs: Go to your service in the dashboard and click "Logs".
+- Environment variables: Edit in the service settings.
+- Custom domains: Configure in the service settings.
+- Scaling: Upgrade to paid plans for more resources.

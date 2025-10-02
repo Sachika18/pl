@@ -5,15 +5,15 @@ FROM openjdk:17-jdk-slim
 WORKDIR /app
 
 # Copy Maven wrapper and pom.xml
-COPY mvnw .
-COPY .mvn .mvn
-COPY pom.xml .
+COPY Backend/mvnw .
+COPY Backend/.mvn .mvn
+COPY Backend/pom.xml .
 
 # Download dependencies (this layer will be cached if pom.xml doesn't change)
 RUN ./mvnw dependency:go-offline -B
 
 # Copy source code
-COPY src ./src
+COPY Backend/src ./src
 
 # Build the application
 RUN ./mvnw clean package -DskipTests
